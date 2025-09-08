@@ -10,12 +10,11 @@ import { Clock, Wifi, WifiOff } from 'lucide-react';
 const mockRoutes: Route[] = [
   {
     id: 'route-1',
-    name: 'Downtown Express',
+    name: 'Intercity Express',
     color: '#3b82f6',
     stops: [
-      { name: 'Central Station', lat: 40.7580, lng: -73.9855 },
-      { name: 'City Hall', lat: 40.7589, lng: -73.9441 },
-      { name: 'Financial District', lat: 40.7074, lng: -74.0113 },
+      { name: 'Clock Tower, Dehradun', lat: 30.3165, lng: 78.0322 },
+      { name: 'Rishikesh Bus Station', lat: 30.0869, lng: 78.2676 },
     ]
   },
   {
@@ -35,8 +34,8 @@ const mockVehicles: Vehicle[] = [
     id: 'bus-1',
     registration: 'NYC-1001',
     route: 'route-1',
-    lat: 40.7580,
-    lng: -73.9855,
+    lat: 30.3165,
+    lng: 78.0322,
     lastUpdate: new Date().toISOString(),
     status: 'active'
   },
@@ -44,8 +43,8 @@ const mockVehicles: Vehicle[] = [
     id: 'bus-2',
     registration: 'NYC-1002',
     route: 'route-1',
-    lat: 40.7589,
-    lng: -73.9441,
+    lat: 30.0869,
+    lng: 78.2676,
     lastUpdate: new Date(Date.now() - 30000).toISOString(),
     status: 'active'
   },
@@ -152,7 +151,7 @@ const PassengerView: React.FC = () => {
             vehicles={vehicles}
             routes={mockRoutes}
             selectedRoute={selectedRoute}
-            center={[40.7580, -73.9855]}
+            center={[30.1975, 78.1497]}
             zoom={13}
           />
         </div>

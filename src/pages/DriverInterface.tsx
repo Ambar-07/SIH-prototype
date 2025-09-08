@@ -63,7 +63,7 @@ const DriverInterface: React.FC = () => {
       vehicleId: 'bus-1',
       vehicleRegistration: 'NYC-1001',
       routeId: 'route-1',
-      routeName: 'Downtown Express'
+      routeName: 'Intercity Express'
     };
 
     setDriverSession(session);
