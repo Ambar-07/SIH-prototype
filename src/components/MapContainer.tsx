@@ -131,16 +131,15 @@ const MapContainer: React.FC<MapContainerProps> = ({
           </Marker>
         ))}
 
-        {/* Route polylines */}
+        {/* Route polylines and stops */}
         {selectedRouteData && (
-          <>
+          <React.Fragment key={`route-${selectedRouteData.id}`}>
             <Polyline
               positions={selectedRouteData.stops.map(stop => [stop.lat, stop.lng])}
               color={selectedRouteData.color}
               weight={4}
               opacity={0.7}
             />
-            {/* Route stops */}
             {selectedRouteData.stops.map((stop, index) => (
               <Marker
                 key={`${selectedRouteData.id}-stop-${index}`}
@@ -155,7 +154,7 @@ const MapContainer: React.FC<MapContainerProps> = ({
                 </Popup>
               </Marker>
             ))}
-          </>
+          </React.Fragment>
         )}
       </LeafletMap>
     </div>
