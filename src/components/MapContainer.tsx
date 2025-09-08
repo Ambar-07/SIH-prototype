@@ -84,11 +84,80 @@ const MapContainer: React.FC<MapContainerProps> = ({
     }
   }, [vehicles, selectedRoute]);
 
-  const getSelectedRouteData = () => {
-    return routes.find(r => r.id === selectedRoute);
-  };
+  const selectedRouteData = routes.find(r => r.id === selectedRoute);
 
-  const selectedRouteData = getSelectedRouteData();
+  // Prepare all children elements as a flat array
+  const mapChildren = [];
+
+  // Add TileLayer
+  mapChildren.push(
+    <TileLayer
+      key="tile-layer"
+      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    />
+  );
+
+  // Add Vehicle markers
+  filteredVehicles.forEach((vehicle) => {
+    mapChildren.push(
+      <Marker
+        key={`vehicle-${vehicle.id}`}
+        position={[vehicle.lat, vehicle.lng]}
+        icon={BusIcon}
+      >
+        <Popup>
+          <div className="p-2">
+            <h3 className="font-semibold text-primary">{vehicle.registration}</h3>
+            <p className="text-sm text-muted-foreground">Route: {vehicle.route}</p>
+            <p className="text-sm text-muted-foreground">
+              Status: <span className={`font-medium ${
+                vehicle.status === 'active' ? 'text-success' : 
+                vehicle.status === 'offline' ? 'text-destructive' : 'text-warning'
+              }`}>
+                {vehicle.status}
+              </span>
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Last update: {new Date(vehicle.lastUpdate).toLocaleTimeString()}
+            </p>
+          </div>
+        </Popup>
+      </Marker>
+    );
+  });
+
+  // Add Route polylines and stops
+  if (selectedRouteData) {
+    // Add polyline
+    mapChildren.push(
+      <Polyline
+        key={`route-line-${selectedRouteData.id}`}
+        positions={selectedRouteData.stops.map(stop => [stop.lat, stop.lng])}
+        color={selectedRouteData.color}
+        weight={4}
+        opacity={0.7}
+      />
+    );
+
+    // Add route stops
+    selectedRouteData.stops.forEach((stop, index) => {
+      mapChildren.push(
+        <Marker
+          key={`route-stop-${selectedRouteData.id}-${index}`}
+          position={[stop.lat, stop.lng]}
+          icon={DefaultIcon}
+        >
+          <Popup>
+            <div className="p-2">
+              <h4 className="font-semibold">{stop.name}</h4>
+              <p className="text-sm text-muted-foreground">Route: {selectedRouteData.name}</p>
+            </div>
+          </Popup>
+        </Marker>
+      );
+    });
+  }
 
   return (
     <div className={className}>
@@ -99,63 +168,7 @@ const MapContainer: React.FC<MapContainerProps> = ({
         className="h-full w-full"
         zoomControl={true}
       >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-
-        {/* Vehicle markers */}
-        {filteredVehicles.map((vehicle) => (
-          <Marker
-            key={vehicle.id}
-            position={[vehicle.lat, vehicle.lng]}
-            icon={BusIcon}
-          >
-            <Popup>
-              <div className="p-2">
-                <h3 className="font-semibold text-primary">{vehicle.registration}</h3>
-                <p className="text-sm text-muted-foreground">Route: {vehicle.route}</p>
-                <p className="text-sm text-muted-foreground">
-                  Status: <span className={`font-medium ${
-                    vehicle.status === 'active' ? 'text-success' : 
-                    vehicle.status === 'offline' ? 'text-destructive' : 'text-warning'
-                  }`}>
-                    {vehicle.status}
-                  </span>
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Last update: {new Date(vehicle.lastUpdate).toLocaleTimeString()}
-                </p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-
-        {/* Route polylines and stops */}
-        {selectedRouteData && (
-          <React.Fragment key={`route-${selectedRouteData.id}`}>
-            <Polyline
-              positions={selectedRouteData.stops.map(stop => [stop.lat, stop.lng])}
-              color={selectedRouteData.color}
-              weight={4}
-              opacity={0.7}
-            />
-            {selectedRouteData.stops.map((stop, index) => (
-              <Marker
-                key={`${selectedRouteData.id}-stop-${index}`}
-                position={[stop.lat, stop.lng]}
-                icon={DefaultIcon}
-              >
-                <Popup>
-                  <div className="p-2">
-                    <h4 className="font-semibold">{stop.name}</h4>
-                    <p className="text-sm text-muted-foreground">Route: {selectedRouteData.name}</p>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
-          </React.Fragment>
-        )}
+        {mapChildren}
       </LeafletMap>
     </div>
   );
