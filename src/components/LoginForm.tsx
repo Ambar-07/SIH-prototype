@@ -119,22 +119,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         </form>
 
         {/* Demo Credentials Info */}
-        <div className="mt-6 p-4 bg-muted rounded-lg">
-          <p className="text-sm font-medium text-muted-foreground mb-2">Demo Credentials:</p>
-          <div className="space-y-1 text-sm">
-            {userType === 'driver' ? (
-              <>
-                <p><strong>Email:</strong> driver@example.com</p>
-                <p><strong>Password:</strong> driver123</p>
-              </>
-            ) : (
-              <>
-                <p><strong>Email:</strong> admin@example.com</p>
-                <p><strong>Password:</strong> admin123</p>
-              </>
-            )}
-          </div>
-        </div>
+  {/* Demo credentials removed as requested */}
       </CardContent>
     </Card>
   );

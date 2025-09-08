@@ -54,16 +54,20 @@ const DriverInterface: React.FC = () => {
   const handleLogin = async (email: string, password: string) => {
     // Simulate authentication - in real app this would use Supabase
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Mock driver session
+
+    // Only allow specific driver credentials
+    if (email !== 'krish@driver.com' || password !== 'krish123') {
+      throw new Error('Invalid driver credentials');
+    }
+
     const session: DriverSession = {
       id: 'driver-1',
-      name: 'John Smith',
+      name: 'Krish',
       email,
       vehicleId: 'bus-1',
-      vehicleRegistration: 'NYC-1001',
-      routeId: 'route-1',
-      routeName: 'Intercity Express'
+      vehicleRegistration: 'UPES-25',
+      routeId: 'UPES-CLK',
+      routeName: 'UPES Dehradun to Clock Tower'
     };
 
     setDriverSession(session);
@@ -226,8 +230,8 @@ const DriverInterface: React.FC = () => {
     id: driverSession!.vehicleId,
     registration: driverSession!.vehicleRegistration,
     route: driverSession!.routeId,
-    lat: 40.7580,
-    lng: -73.9855,
+    lat: 30.4180,
+    lng: 77.9685,
     lastUpdate: new Date().toISOString(),
     status: 'offline'
   };
@@ -235,7 +239,6 @@ const DriverInterface: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <NavigationBar />
-      
       <div className="container mx-auto p-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Driver Info & Controls */}
@@ -352,7 +355,6 @@ const DriverInterface: React.FC = () => {
               </CardContent>
             </Card>
           </div>
-
           {/* Map */}
           <div className="lg:col-span-2">
             <Card className="h-[600px]">
@@ -360,7 +362,11 @@ const DriverInterface: React.FC = () => {
                 <SimpleMapContainer
                   vehicles={[mockVehicle]}
                   routes={[]}
-                  center={currentPosition ? [currentPosition.coords.latitude, currentPosition.coords.longitude] : [40.7580, -73.9855]}
+                  center={
+                    currentPosition
+                      ? [currentPosition.coords.latitude, currentPosition.coords.longitude]
+                      : [30.4180, 77.9685] // Only change this line if you want to use the assigned route's first stop
+                  }
                   zoom={15}
                   className="h-full rounded-lg"
                 />

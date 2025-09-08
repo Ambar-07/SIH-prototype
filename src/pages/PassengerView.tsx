@@ -7,53 +7,66 @@ import { Badge } from '@/components/ui/badge';
 import { Clock, Wifi, WifiOff } from 'lucide-react';
 
 // Mock data - in real app this would come from Supabase
+// Updated mockRoutes with new IDs and names
 const mockRoutes: Route[] = [
   {
-    id: 'route-1',
-    name: 'Intercity Express',
+    id: 'DDN-RSK',
+    name: 'Dehradun to Rishikesh',
     color: '#3b82f6',
     stops: [
-      { name: 'Clock Tower, Dehradun', lat: 30.3165, lng: 78.0322 },
-      { name: 'Rishikesh Bus Station', lat: 30.0869, lng: 78.2676 },
+      { name: 'Dehradun', lat: 30.3165, lng: 78.0322 },
+      { name: 'Rishikesh', lat: 30.0869, lng: 78.2676 },
     ]
   },
   {
-    id: 'route-2',
-    name: 'University Line',
+    id: 'RSK-DDN',
+    name: 'Rishikesh to Dehradun',
     color: '#10b981',
     stops: [
-      { name: 'Campus North', lat: 40.8075, lng: -73.9626 },
-      { name: 'Student Center', lat: 40.8021, lng: -73.9570 },
-      { name: 'Library Square', lat: 40.7967, lng: -73.9514 },
+      { name: 'Rishikesh', lat: 30.0869, lng: 78.2676 },
+      { name: 'Dehradun', lat: 30.3165, lng: 78.0322 },
+    ]
+  },
+  {
+    id: 'UPES-CLK',
+    name: 'UPES Dehradun to Clock Tower',
+    color: '#f59e42',
+    stops: [
+      { name: 'UPES Dehradun', lat: 30.4180, lng: 77.9685 },
+      { name: 'Bidholi Chowk', lat: 30.4065, lng: 77.9668 },
+      { name: 'Premnagar', lat: 30.3849, lng: 77.9582 },
+      { name: 'Ballupur Chowk', lat: 30.3365, lng: 77.9886 },
+      { name: 'Clock Tower', lat: 30.3244, lng: 78.0419 }
     ]
   }
 ];
 
+// Updated mockVehicles with new IDs and assignments
 const mockVehicles: Vehicle[] = [
   {
     id: 'bus-1',
-    registration: 'NYC-1001',
-    route: 'route-1',
-    lat: 30.3165,
-    lng: 78.0322,
+    registration: 'UPES-25',
+    route: 'UPES-CLK',
+    lat: 30.4180,
+    lng: 77.9685,
     lastUpdate: new Date().toISOString(),
     status: 'active'
   },
   {
     id: 'bus-2',
-    registration: 'NYC-1002',
-    route: 'route-1',
-    lat: 30.0869,
-    lng: 78.2676,
+    registration: 'UPES-26',
+    route: 'DDN-RSK',
+    lat: 30.3165,
+    lng: 78.0322,
     lastUpdate: new Date(Date.now() - 30000).toISOString(),
     status: 'active'
   },
   {
     id: 'bus-3',
-    registration: 'NYC-2001',
-    route: 'route-2',
-    lat: 40.8075,
-    lng: -73.9626,
+    registration: 'UPES-27',
+    route: 'RSK-DDN',
+    lat: 30.0869,
+    lng: 78.2676,
     lastUpdate: new Date(Date.now() - 120000).toISOString(),
     status: 'offline'
   }
