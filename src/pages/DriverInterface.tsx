@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import NavigationBar from '@/components/NavigationBar';
 import LoginForm from '@/components/LoginForm';
-import MapContainer, { Vehicle } from '@/components/MapContainer';
+import SimpleMapContainer, { Vehicle } from '@/components/SimpleMapContainer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -357,7 +357,7 @@ const DriverInterface: React.FC = () => {
           <div className="lg:col-span-2">
             <Card className="h-[600px]">
               <CardContent className="p-0 h-full">
-                <MapContainer
+                <SimpleMapContainer
                   vehicles={[mockVehicle]}
                   routes={[]}
                   center={currentPosition ? [currentPosition.coords.latitude, currentPosition.coords.longitude] : [40.7580, -73.9855]}

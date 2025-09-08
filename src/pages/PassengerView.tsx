@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MapContainer, { Vehicle, Route } from '@/components/MapContainer';
+import SimpleMapContainer, { Vehicle, Route } from '@/components/SimpleMapContainer';
 import RouteSearch, { RouteInfo } from '@/components/RouteSearch';
 import NavigationBar from '@/components/NavigationBar';
 import { Card } from '@/components/ui/card';
@@ -148,7 +148,7 @@ const PassengerView: React.FC = () => {
 
         {/* Map */}
         <div className="flex-1">
-          <MapContainer
+          <SimpleMapContainer
             vehicles={vehicles}
             routes={mockRoutes}
             selectedRoute={selectedRoute}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import NavigationBar from '@/components/NavigationBar';
 import LoginForm from '@/components/LoginForm';
-import MapContainer, { Vehicle, Route } from '@/components/MapContainer';
+import SimpleMapContainer, { Vehicle, Route } from '@/components/SimpleMapContainer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -281,7 +281,7 @@ const AdminDashboard: React.FC = () => {
               <div className="lg:col-span-3">
                 <Card className="h-[600px]">
                   <CardContent className="p-0 h-full">
-                    <MapContainer
+                    <SimpleMapContainer
                       vehicles={vehicles}
                       routes={mockRoutes}
                       center={[40.7580, -73.9855]}
